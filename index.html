@@ -92,7 +92,10 @@
     .card-meta b:last-child{color:var(--orange);border:1px solid rgba(239,75,35,.35);background:rgba(239,75,35,.07);border-radius:100px;padding:3px 9px;flex:none}
     .art{position:relative;overflow:hidden;display:block;background:#d9d7d0;min-height:0}
     .art:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.5));pointer-events:none}
-    .art em{font-style:normal;position:absolute;z-index:2;left:7%;bottom:6%;color:#fff;font-size:clamp(26px,2.8vw,50px);font-weight:600;line-height:.86;letter-spacing:-.075em;text-shadow:0 3px 24px rgba(0,0,0,.35)}
+    .art em{font-style:normal;position:absolute;z-index:2;left:8%;bottom:7%;color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.35)}
+    .art em .cap{display:block;font-size:8px;font-weight:650;letter-spacing:.26em;margin-bottom:9px;opacity:.85}
+    .art em b{display:block;font-size:clamp(28px,3vw,52px);font-weight:600;line-height:.88;letter-spacing:-.07em}
+    .art em.cjk b{font-size:clamp(26px,2.8vw,46px);line-height:1.12;letter-spacing:.06em}
     .art-cc{background:
       radial-gradient(circle at 76% 22%,rgba(255,246,222,.98) 0 4.5%,rgba(255,246,222,.28) 7.5%,transparent 12%),
       radial-gradient(circle at 22% 18%,rgba(255,255,255,.9) 0 .7%,transparent 1.4%),
@@ -233,7 +236,9 @@
       .card-meta{font-size:6.5px}
       .card-copy b{font-size:11.5px}
       .card-copy small,.card-copy strong{font-size:7.5px}
-      .art em{font-size:9vw}
+      .art em .cap{font-size:6.5px;letter-spacing:.2em;margin-bottom:7px}
+      .art em b{font-size:8.6vw}
+      .art em.cjk b{font-size:8vw}
       .stage-foot{left:18px;right:18px}
       .hint{max-width:66%;line-height:1.7}
       .statement{padding:12vh 20px}
@@ -309,21 +314,21 @@
         <a class="card" href="#cengceng" data-id="cengceng" aria-label="打开 蹭蹭 项目详情">
           <span class="card-in">
             <span class="card-meta"><b>01 / EMOTIONAL APP</b><b data-i18n="card1b">P1 MVP 已交付</b></span>
-            <span class="art art-cc"><em data-i18n-html="card1em">整夜,<br>陪着你</em></span>
+            <span class="art art-cc"><em class="cjk"><span class="cap">ALL NIGHT, WITH YOU</span><b data-i18n-html="card1em">整夜<br>陪着你</b></em></span>
             <span class="card-copy"><b data-i18n="card1t">蹭蹭 CengCeng · 哄系情感宠物</b><small data-i18n="card1s">全栈独立开发 · 16 模块 / 124 条 FR</small><strong data-i18n="card1x">从 SRS 到可测上线，一人完成</strong></span>
           </span>
         </a>
         <a class="card" href="#msc" data-id="msc" aria-label="打开迷你软件公司项目详情">
           <span class="card-in">
             <span class="card-meta"><b>02 / MULTI-AGENT</b><b>60% → 100%</b></span>
-            <span class="art art-msc"><em>5 AGENTS<br>1 PIPELINE</em></span>
+            <span class="art art-msc"><em><span class="cap">CREWAI PIPELINE</span><b>5 AGENTS<br>1 PIPELINE</b></em></span>
             <span class="card-copy"><b data-i18n="card2t">迷你软件公司 · CrewAI 多智能体</b><small data-i18n="card2s">AI 工程 · 五角色质量门禁</small><strong data-i18n="card2x">需求到 zipapp，三轮自动收敛</strong></span>
           </span>
         </a>
         <a class="card" href="#contact" data-id="" aria-label="更多作品制作中">
           <span class="card-in">
             <span class="card-meta"><b>03 / NEXT</b><b data-i18n="card3b">制作中</b></span>
-            <span class="art art-next"><em>MORE<br>SOON</em></span>
+            <span class="art art-next"><em><span class="cap">NEXT PROJECT</span><b>MORE<br>SOON</b></em></span>
             <span class="card-copy"><b data-i18n="card3t">更多作品制作中</b><small data-i18n="card3s">持续迭代中</small><strong data-i18n="card3x">期待你的关注</strong></span>
           </span>
         </a>
@@ -399,7 +404,7 @@
       docDesc:"王俊俊｜全栈与 AI 工程作品集：把想法做成可验证、可上线、可交付的产品。",
       navWork:"代表作品", navWhy:"个人优势", navContact:"联系",
       hint:"拖动 / 滚轮探索 · 点击卡片展开详情 · 到底后继续下滑",
-      card1b:"P1 MVP 已交付", card1em:"整夜,<br>陪着你",
+      card1b:"P1 MVP 已交付", card1em:"整夜<br>陪着你",
       card1t:"蹭蹭 CengCeng · 哄系情感宠物", card1s:"全栈独立开发 · 16 模块 / 124 条 FR", card1x:"从 SRS 到可测上线，一人完成",
       card2t:"迷你软件公司 · CrewAI 多智能体", card2s:"AI 工程 · 五角色质量门禁", card2x:"需求到 zipapp，三轮自动收敛",
       card3b:"制作中", card3t:"更多作品制作中", card3s:"持续迭代中", card3x:"期待你的关注",
@@ -421,7 +426,7 @@
       docDesc:"王俊俊｜フルスタック・AIエンジニアリング作品集：アイデアを、検証可能でリリースできる成果に。",
       navWork:"作品紹介", navWhy:"私の強み", navContact:"連絡先",
       hint:"ドラッグ / ホイールで探索 · カードをタップで詳細 · 最後まで送ると下へ",
-      card1b:"P1 MVP 納品済", card1em:"ずっと、<br>そばに",
+      card1b:"P1 MVP 納品済", card1em:"ずっと<br>そばに",
       card1t:"CengCeng · 癒やしのペット", card1s:"フルスタック単独開発 · 16モジュール / 124 FR", card1x:"SRS からテスト済リリースまで一人で",
       card2t:"ミニソフトウェア会社 · CrewAI", card2s:"AI エンジニアリング · 5役割の品質ゲート", card2x:"要求から zipapp まで、3ラウンド収束",
       card3b:"制作中", card3t:"制作中の作品", card3s:"順次アップデート中", card3x:"ご期待ください",
