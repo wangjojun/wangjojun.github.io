@@ -14,7 +14,7 @@
     :root{--paper:#ece9e1;--paper2:#f5f2eb;--ink:#11110f;--orange:#ef4b23;--ease:cubic-bezier(.76,0,.24,1)}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Helvetica Neue","PingFang SC","Microsoft YaHei",Arial,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Helvetica Neue","PingFang SC","Hiragino Sans","Microsoft YaHei",Arial,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     button,a{color:inherit;font:inherit}
     button{border:0}
     ::selection{background:var(--orange);color:#fff}
@@ -38,11 +38,19 @@
     .brand{justify-self:start;white-space:nowrap}
     .brand-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);margin-right:9px;box-shadow:0 0 0 5px rgba(239,75,35,.1);animation:pulse 3.4s infinite var(--ease)}
     @keyframes pulse{0%,100%{box-shadow:0 0 0 5px rgba(239,75,35,.1)}50%{box-shadow:0 0 0 9px rgba(239,75,35,.04)}}
+    .brand-mini{display:none}
     .topbar nav{display:flex;gap:32px}
     .topbar nav a{position:relative}
     .topbar nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:currentColor;transition:right .4s}
     .topbar nav a:hover:after{right:0}
-    .topbar-end{justify-self:end;display:flex;align-items:center;gap:18px}
+    .topbar-end{justify-self:end;display:flex;align-items:center;gap:14px}
+
+    /* 语言切换 */
+    .lang{display:flex;align-items:center;gap:2px;border:1px solid rgba(17,17,15,.28);border-radius:100px;padding:3px;background:rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+    .lang-btn{background:transparent;cursor:pointer;font-size:9px;font-weight:650;letter-spacing:.06em;padding:5px 8px;border-radius:100px;line-height:1;transition:background .25s,color .25s}
+    .lang-btn:hover{background:rgba(239,75,35,.12)}
+    .lang-btn.on{background:var(--orange);color:#fff}
+
     .mode{display:flex;align-items:center;gap:10px;background:transparent;cursor:pointer;font-size:10px;letter-spacing:.13em;padding:6px 0}
     .mode i{width:25px;height:12px;border:1px solid #222;border-radius:10px;position:relative;flex:none}
     .mode i:after{content:"";position:absolute;width:6px;height:6px;background:#111;border-radius:50%;left:14px;top:2px;transition:left .3s}
@@ -57,7 +65,7 @@
     .mobile-menu.open{transform:none;visibility:visible;transition:transform .8s var(--ease)}
     .mobile-menu .mm-label{font-size:9px;letter-spacing:.2em;color:#5f5c54;margin-bottom:6vh}
     .mobile-menu a.mm-item{font-size:clamp(44px,13vw,72px);font-weight:520;letter-spacing:-.06em;text-decoration:none;line-height:1.22;display:flex;align-items:baseline;gap:16px;opacity:0;transform:translateY(30px);transition:.7s var(--ease)}
-    .mobile-menu a.mm-item span{font-size:11px;letter-spacing:.12em;color:var(--orange);transform:translateY(-18px)}
+    .mobile-menu a.mm-item .num{font-size:11px;letter-spacing:.12em;color:var(--orange);transform:translateY(-18px)}
     .mobile-menu.open a.mm-item{opacity:1;transform:none}
     .mobile-menu.open a.mm-item:nth-child(2){transition-delay:.12s}
     .mobile-menu.open a.mm-item:nth-child(3){transition-delay:.2s}
@@ -123,13 +131,13 @@
     .statement p strong{font-weight:520;color:var(--orange)}
     .proof-strip{width:min(1100px,94vw);display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #b8b4aa;border-bottom:1px solid #b8b4aa;margin-bottom:58px}
     .proof-strip span{padding:22px 20px;font-size:11px;letter-spacing:.04em;transition:background .35s}
-    .proof-strip span:hover{background:rgba(239,75,35,.05)}
-    .proof-strip span+span{border-left:1px solid #b8b4aa}
+    .proof-strip>span:hover{background:rgba(239,75,35,.05)}
+    .proof-strip>span+span{border-left:1px solid #b8b4aa}
     .proof-strip b{color:var(--orange);margin-right:10px}
     .statement .cta{background:transparent;padding:15px 0;border-bottom:1px solid #111;font-size:10px;font-weight:650;letter-spacing:.18em;cursor:pointer;transition:letter-spacing .4s var(--ease)}
     .statement .cta:hover{letter-spacing:.24em}
-    .statement .cta span{padding-left:55px;display:inline-block;transition:transform .4s var(--ease)}
-    .statement .cta:hover span{transform:translate(8px,-8px)}
+    .statement .cta .arrow{padding-left:55px;display:inline-block;transition:transform .4s var(--ease)}
+    .statement .cta:hover .arrow{transform:translate(8px,-8px)}
 
     /* ---------- 联系区 ---------- */
     .contact{min-height:58vh;padding:10vh 4vw calc(4vh + env(safe-area-inset-bottom));background:#151615;color:#f2efe7;display:flex;flex-direction:column;justify-content:space-between;gap:6vh}
@@ -203,15 +211,19 @@
     body.project-open{overflow:hidden}
 
     /* Toast */
-    .toast{position:fixed;left:50%;bottom:calc(34px + env(safe-area-inset-bottom));transform:translate(-50%,24px);background:#151615;color:#f2efe7;padding:13px 24px;border-radius:100px;font-size:10px;letter-spacing:.14em;opacity:0;pointer-events:none;transition:.45s var(--ease);z-index:110;border:1px solid #333}
+    .toast{position:fixed;left:50%;bottom:calc(34px + env(safe-area-inset-bottom));transform:translate(-50%,24px);background:#151615;color:#f2efe7;padding:13px 24px;border-radius:100px;font-size:10px;letter-spacing:.14em;opacity:0;pointer-events:none;transition:.45s var(--ease);z-index:110;border:1px solid #333;max-width:90vw;text-align:center}
     .toast.show{opacity:1;transform:translate(-50%,0)}
 
     /* ---------- 响应式 ---------- */
     @media(max-width:700px){
-      .topbar{padding:0 18px;height:64px}
+      .topbar{padding:0 16px;height:64px}
       .topbar nav{display:none}
       .mode span{display:none}
       .burger{display:flex}
+      .brand-full{display:none}
+      .brand-mini{display:inline}
+      .topbar-end{gap:10px}
+      .lang-btn{padding:5px 7px;font-size:8.5px}
       .stage{min-height:580px}
       .kicker{top:13%;left:18px;right:18px}
       .kicker span:last-child{display:none}
@@ -226,9 +238,9 @@
       .hint{max-width:66%;line-height:1.7}
       .statement{padding:12vh 20px}
       .statement p{font-size:11.6vw;margin-bottom:48px}
-      .statement .cta span{padding-left:30px}
+      .statement .cta .arrow{padding-left:30px}
       .proof-strip{grid-template-columns:1fr;text-align:left;margin-bottom:44px}
-      .proof-strip span+span{border-left:0;border-top:1px solid #b8b4aa}
+      .proof-strip>span+span{border-left:0;border-top:1px solid #b8b4aa}
       .contact{padding:9vh 20px calc(5vh + env(safe-area-inset-bottom));gap:4vh}
       .contact>a{font-size:9.6vw}
       .copy-btn{width:100%;text-align:center}
@@ -272,9 +284,18 @@
   <div class="grain" aria-hidden="true"></div>
   <main class="home" id="top">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="返回首页"><span class="brand-dot"></span>WJJ / PORTFOLIO 2026</a>
-      <nav aria-label="主导航"><a href="#work">代表作品</a><a href="#profile">个人优势</a><a href="#contact">联系</a></nav>
+      <a class="brand" href="#top" aria-label="返回首页"><span class="brand-dot"></span><span class="brand-full">WJJ / PORTFOLIO 2026</span><span class="brand-mini">WJJ</span></a>
+      <nav aria-label="主导航">
+        <a href="#work" data-i18n="navWork">代表作品</a>
+        <a href="#profile" data-i18n="navWhy">个人优势</a>
+        <a href="#contact" data-i18n="navContact">联系</a>
+      </nav>
       <div class="topbar-end">
+        <div class="lang" role="group" aria-label="Language / 语言 / 言語">
+          <button class="lang-btn" data-lang="zh" type="button" aria-label="中文">中</button>
+          <button class="lang-btn" data-lang="ja" type="button" aria-label="日本語">日</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
+        </div>
         <button class="mode" id="modeToggle" type="button" aria-pressed="true" aria-label="AUTO PLAY 自动轮播开关"><span>AUTO PLAY</span><i></i></button>
         <button class="burger" id="navToggle" type="button" aria-expanded="false" aria-label="打开菜单"><i></i><i></i></button>
       </div>
@@ -287,45 +308,45 @@
       <div class="rail" id="rail">
         <a class="card" href="#cengceng" data-id="cengceng" aria-label="打开 蹭蹭 项目详情">
           <span class="card-in">
-            <span class="card-meta"><b>01 / EMOTIONAL APP</b><b>P1 MVP 已交付</b></span>
-            <span class="art art-cc"><em>整夜,<br>陪着你</em></span>
-            <span class="card-copy"><b>蹭蹭 CengCeng · 哄系情感宠物</b><small>全栈独立开发 · 16 模块 / 124 条 FR</small><strong>从 SRS 到可测上线，一人完成</strong></span>
+            <span class="card-meta"><b>01 / EMOTIONAL APP</b><b data-i18n="card1b">P1 MVP 已交付</b></span>
+            <span class="art art-cc"><em data-i18n-html="card1em">整夜,<br>陪着你</em></span>
+            <span class="card-copy"><b data-i18n="card1t">蹭蹭 CengCeng · 哄系情感宠物</b><small data-i18n="card1s">全栈独立开发 · 16 模块 / 124 条 FR</small><strong data-i18n="card1x">从 SRS 到可测上线，一人完成</strong></span>
           </span>
         </a>
         <a class="card" href="#msc" data-id="msc" aria-label="打开迷你软件公司项目详情">
           <span class="card-in">
             <span class="card-meta"><b>02 / MULTI-AGENT</b><b>60% → 100%</b></span>
             <span class="art art-msc"><em>5 AGENTS<br>1 PIPELINE</em></span>
-            <span class="card-copy"><b>迷你软件公司 · CrewAI 多智能体</b><small>AI 工程 · 五角色质量门禁</small><strong>需求到 zipapp，三轮自动收敛</strong></span>
+            <span class="card-copy"><b data-i18n="card2t">迷你软件公司 · CrewAI 多智能体</b><small data-i18n="card2s">AI 工程 · 五角色质量门禁</small><strong data-i18n="card2x">需求到 zipapp，三轮自动收敛</strong></span>
           </span>
         </a>
         <a class="card" href="#contact" data-id="" aria-label="更多作品制作中">
           <span class="card-in">
-            <span class="card-meta"><b>03 / NEXT</b><b>制作中</b></span>
+            <span class="card-meta"><b>03 / NEXT</b><b data-i18n="card3b">制作中</b></span>
             <span class="art art-next"><em>MORE<br>SOON</em></span>
-            <span class="card-copy"><b>更多作品制作中</b><small>持续迭代中</small><strong>期待你的关注</strong></span>
+            <span class="card-copy"><b data-i18n="card3t">更多作品制作中</b><small data-i18n="card3s">持续迭代中</small><strong data-i18n="card3x">期待你的关注</strong></span>
           </span>
         </a>
       </div>
-      <div class="stage-foot"><span class="hint"><i></i>拖动 / 滚轮探索 · 点击卡片展开详情 · 到底后继续下滑</span><span class="counter"><b id="currentCount">01</b> / 03</span></div>
+      <div class="stage-foot"><span class="hint"><i></i><span data-i18n="hint">拖动 / 滚轮探索 · 点击卡片展开详情 · 到底后继续下滑</span></span><span class="counter"><b id="currentCount">01</b> / 03</span></div>
     </section>
 
     <section class="statement" id="profile">
-      <span class="section-label" data-reveal>WHY ME / 为什么是我</span>
-      <p data-reveal>我不只会“写代码”。<br>我能把它做成<strong>产品、系统与可验证的交付。</strong></p>
+      <span class="section-label" data-i18n="whyLabel" data-reveal>WHY ME / 为什么是我</span>
+      <p data-i18n-html="whyP" data-reveal>我不只会“写代码”。<br>我能把它做成<strong>产品、系统与可验证的交付。</strong></p>
       <div class="proof-strip" aria-label="能力概览" data-reveal>
-        <span><b>01</b> 独立交付全栈应用与服务端</span>
-        <span><b>02</b> 多智能体系统与质量门禁</span>
-        <span><b>03</b> 设计文档驱动、测试先行</span>
+        <span><b>01</b><span data-i18n="proof1">独立交付全栈应用与服务端</span></span>
+        <span><b>02</b><span data-i18n="proof2">多智能体系统与质量门禁</span></span>
+        <span><b>03</b><span data-i18n="proof3">设计文档驱动、测试先行</span></span>
       </div>
-      <button class="cta" id="viewAll" type="button" data-reveal>从第一项开始查看完整作品集 <span>↗</span></button>
+      <button class="cta" id="viewAll" type="button" data-reveal><span data-i18n="cta">从第一项开始查看完整作品集</span><span class="arrow">↗</span></button>
     </section>
 
     <footer class="contact" id="contact">
-      <p data-reveal>AVAILABLE FOR FULL-STACK / AI ENGINEERING</p>
+      <p data-i18n="contactLead" data-reveal>AVAILABLE FOR FULL-STACK / AI ENGINEERING</p>
       <div class="mail-row" data-reveal>
         <a href="mailto:wangjunjun@sinosoft.hk">wangjunjun@sinosoft.hk</a>
-        <button class="copy-btn" id="copyEmail" type="button">COPY EMAIL</button>
+        <button class="copy-btn" id="copyEmail" type="button" data-i18n="copyBtn">复制邮箱</button>
       </div>
       <div class="contact-bottom" data-reveal>
         <span>王俊俊 · PORTFOLIO 2026</span>
@@ -335,31 +356,35 @@
   </main>
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <span class="mm-label">MENU / 导航</span>
-    <a class="mm-item" href="#work"><span>01</span>代表作品</a>
-    <a class="mm-item" href="#profile"><span>02</span>个人优势</a>
-    <a class="mm-item" href="#contact"><span>03</span>联系我</a>
+    <span class="mm-label" data-i18n="mmLabel">MENU / 导航</span>
+    <a class="mm-item" href="#work"><span class="num">01</span><span data-i18n="navWork">代表作品</span></a>
+    <a class="mm-item" href="#profile"><span class="num">02</span><span data-i18n="navWhy">个人优势</span></a>
+    <a class="mm-item" href="#contact"><span class="num">03</span><span data-i18n="navContact">联系</span></a>
     <div class="mm-foot">WANGJOJUN · PORTFOLIO 2026<br>FULL-STACK · MULTI-AGENT</div>
   </div>
 
   <aside class="project" id="project" aria-hidden="true" aria-label="项目详情">
-    <nav class="project-nav"><span>WJJ / CASE STUDY</span><button id="closeProject" type="button">返回作品轨道 <i></i><i></i></button></nav>
+    <nav class="project-nav"><span>WJJ / CASE STUDY</span><button id="closeProject" type="button"><span data-i18n="backBtn">返回作品轨道</span> <i></i><i></i></button></nav>
     <section class="project-hero"><div class="hero-media" id="heroMedia"></div><div class="hero-shade"></div>
       <p id="projectKicker">01 / EMOTIONAL APP</p>
       <h2 id="projectTitle">CENGCENG</h2>
       <div class="hero-proof"><span>MY ROLE</span><b id="heroRole">全栈独立开发</b></div>
-      <span class="project-scroll">向下查看完整证据 <i></i></span>
+      <span class="project-scroll"><span data-i18n="heroScroll">向下查看完整证据</span> <i></i></span>
     </section>
-    <section class="project-intro"><span class="eyebrow">PROJECT IMPACT / 项目价值</span>
+    <section class="project-intro"><span class="eyebrow" data-i18n="impactLabel">PROJECT IMPACT / 项目价值</span>
       <p id="projectIntro"></p>
-      <div class="facts"><span>我的角色<br><b id="factRole"></b></span><span>核心交付<br><b id="factDelivery"></b></span><span>结果 / 状态<br><b id="factResult"></b></span></div>
+      <div class="facts">
+        <span><span data-i18n="factsRole">我的角色</span><br><b id="factRole"></b></span>
+        <span><span data-i18n="factsDelivery">核心交付</span><br><b id="factDelivery"></b></span>
+        <span><span data-i18n="factsResult">结果 / 状态</span><br><b id="factResult"></b></span>
+      </div>
     </section>
-    <section class="project-process"><div class="process-head"><span>WHAT I BUILT</span><h3>不是“参与”，<br>是我亲手完成。</h3></div>
+    <section class="project-process"><div class="process-head"><span data-i18n="builtLabel">WHAT I BUILT</span><h3 data-i18n-html="builtTitle">不是“参与”，<br>是我亲手完成。</h3></div>
       <div class="process-list" id="processList"></div>
     </section>
     <section class="evidence" id="evidenceWall" aria-label="关键数据证据"></section>
     <section class="project-actions" id="projectActions"></section>
-    <section class="next-project"><p>NEXT CASE / 下一个项目</p>
+    <section class="next-project"><p data-i18n="nextLabel">NEXT CASE / 下一个项目</p>
       <button id="nextProject" type="button"><span id="nextNumber">02</span> <b id="nextTitle">迷你软件公司</b> →</button>
     </section>
   </aside>
@@ -367,59 +392,267 @@
   <div class="toast" id="toast" role="status" aria-live="polite">邮箱已复制到剪贴板</div>
 
   <script>
-  /* ================= 项目数据 ================= */
+  /* ================= 三语言字典（UI 文案） ================= */
+  const T = {
+    zh: {
+      docTitle:"王俊俊｜全栈与 AI 工程作品集",
+      docDesc:"王俊俊｜全栈与 AI 工程作品集：把想法做成可验证、可上线、可交付的产品。",
+      navWork:"代表作品", navWhy:"个人优势", navContact:"联系",
+      hint:"拖动 / 滚轮探索 · 点击卡片展开详情 · 到底后继续下滑",
+      card1b:"P1 MVP 已交付", card1em:"整夜,<br>陪着你",
+      card1t:"蹭蹭 CengCeng · 哄系情感宠物", card1s:"全栈独立开发 · 16 模块 / 124 条 FR", card1x:"从 SRS 到可测上线，一人完成",
+      card2t:"迷你软件公司 · CrewAI 多智能体", card2s:"AI 工程 · 五角色质量门禁", card2x:"需求到 zipapp，三轮自动收敛",
+      card3b:"制作中", card3t:"更多作品制作中", card3s:"持续迭代中", card3x:"期待你的关注",
+      whyLabel:"WHY ME / 为什么是我",
+      whyP:"我不只会“写代码”。<br>我能把它做成<strong>产品、系统与可验证的交付。</strong>",
+      proof1:"独立交付全栈应用与服务端", proof2:"多智能体系统与质量门禁", proof3:"设计文档驱动、测试先行",
+      cta:"从第一项开始查看完整作品集",
+      contactLead:"AVAILABLE FOR FULL-STACK / AI ENGINEERING",
+      copyBtn:"复制邮箱", toastCopied:"邮箱已复制",
+      mmLabel:"MENU / 导航",
+      backBtn:"返回作品轨道", heroScroll:"向下查看完整证据",
+      impactLabel:"PROJECT IMPACT / 项目价值",
+      factsRole:"我的角色", factsDelivery:"核心交付", factsResult:"结果 / 状态",
+      builtLabel:"WHAT I BUILT", builtTitle:"不是“参与”，<br>是我亲手完成。",
+      nextLabel:"NEXT CASE / 下一个项目"
+    },
+    ja: {
+      docTitle:"王俊俊｜フルスタック・AIエンジニア作品集",
+      docDesc:"王俊俊｜フルスタック・AIエンジニアリング作品集：アイデアを、検証可能でリリースできる成果に。",
+      navWork:"作品紹介", navWhy:"私の強み", navContact:"連絡先",
+      hint:"ドラッグ / ホイールで探索 · カードをタップで詳細 · 最後まで送ると下へ",
+      card1b:"P1 MVP 納品済", card1em:"ずっと、<br>そばに",
+      card1t:"CengCeng · 癒やしのペット", card1s:"フルスタック単独開発 · 16モジュール / 124 FR", card1x:"SRS からテスト済リリースまで一人で",
+      card2t:"ミニソフトウェア会社 · CrewAI", card2s:"AI エンジニアリング · 5役割の品質ゲート", card2x:"要求から zipapp まで、3ラウンド収束",
+      card3b:"制作中", card3t:"制作中の作品", card3s:"順次アップデート中", card3x:"ご期待ください",
+      whyLabel:"WHY ME / 選ばれる理由",
+      whyP:"私は「コードを書く」だけではありません。<br><strong>プロダクト、システム、検証可能な成果</strong>に変えて届けます。",
+      proof1:"フルスタックアプリとサーバーを単独納品", proof2:"マルチエージェントと品質ゲートの構築", proof3:"ドキュメント主導・テストファースト",
+      cta:"最初の作品からフル作品集を見る",
+      contactLead:"フルスタック / AI エンジニアリングのポジションを探しています",
+      copyBtn:"メールをコピー", toastCopied:"メールアドレスをコピーしました",
+      mmLabel:"MENU / ナビ",
+      backBtn:"作品一覧に戻る", heroScroll:"下にスクロールして証拠を見る",
+      impactLabel:"PROJECT IMPACT / プロジェクト価値",
+      factsRole:"私の役割", factsDelivery:"主な成果物", factsResult:"結果 / 状態",
+      builtLabel:"WHAT I BUILT", builtTitle:"「関わった」ではなく、<br>私が作りました。",
+      nextLabel:"NEXT CASE / 次の作品"
+    },
+    en: {
+      docTitle:"Wang Junjun · Full-Stack & AI Engineering Portfolio",
+      docDesc:"Wang Junjun | Full-stack & AI engineering portfolio: turning ideas into verifiable, shippable products.",
+      navWork:"Work", navWhy:"Why Me", navContact:"Contact",
+      hint:"Drag / scroll to explore · click a card for details · keep scrolling to continue",
+      card1b:"P1 MVP SHIPPED", card1em:"ALL NIGHT<br>WITH YOU",
+      card1t:"CengCeng · Soothing Pet", card1s:"Solo full-stack · 16 modules / 124 FRs", card1x:"SRS to tested launch — solo",
+      card2t:"Mini Software Co. · CrewAI Multi-Agent", card2s:"AI engineering · 5-role quality gates", card2x:"Requirements to zipapp, 3-round convergence",
+      card3b:"SOON", card3t:"More works coming", card3s:"Iterating continuously", card3x:"Stay tuned",
+      whyLabel:"WHY ME",
+      whyP:"I don’t just “write code.”<br>I turn it into <strong>products, systems, and verifiable delivery.</strong>",
+      proof1:"Solo full-stack app & server delivery", proof2:"Multi-agent systems & quality gates", proof3:"Docs-driven, test-first delivery",
+      cta:"View the full portfolio from the first project",
+      contactLead:"AVAILABLE FOR FULL-STACK / AI ENGINEERING",
+      copyBtn:"COPY EMAIL", toastCopied:"Email copied",
+      mmLabel:"MENU",
+      backBtn:"Back to gallery", heroScroll:"Scroll for full evidence",
+      impactLabel:"PROJECT IMPACT",
+      factsRole:"My role", factsDelivery:"Core delivery", factsResult:"Result / status",
+      builtLabel:"WHAT I BUILT", builtTitle:"Not “involved” —<br>I built it myself.",
+      nextLabel:"NEXT CASE"
+    }
+  };
+
+  /* ================= 项目数据（三语言） ================= */
   const PROJECTS = {
     cengceng: {
-      kicker: "01 / EMOTIONAL APP",
-      title: "CENGCENG<br>哄系情感宠物",
-      art: "art-cc",
-      intro: "一个“不说教、不索取、只哄你”的睡前情感宠物。<strong>从 8 份设计文档到 88 个用例全绿，一人完成。</strong>",
-      role: "全栈独立开发 · 产品 / 服务端 / 部署",
-      delivery: "双服务 + 后台任务 · 103 条 P0 功能",
-      result: "P1 MVP 已交付 · 测试全绿",
-      process: [
-        {t:"产品与设计基线",d:"从竞品研究、SRS、原型、可研报告入手，拆出 16 个模块、124 条 FR，全部落成只读设计基线，开发逐条对齐。"},
-        {t:"契约先行",d:"shared-api 作为错误码、DDL、埋点白名单的唯一事实源，core / crisis / jobs 三个服务共享同一份契约，先定边界再写代码。"},
-        {t:"双服务故障域隔离",d:"cc-core 承载业务，cc-crisis 承载心理安全。core 宕机时，工单、排班、熔断、L4 审计仍然可用——安全系统不能陪主业务一起挂。"},
-        {t:"心理安全红线",d:"危机信号四件套 + 全局熔断 + 双人复核 + 18 岁与单独同意 + 埋点零原文，红线落到代码与数据库触发器（care_value 只升不降），不靠自觉。"},
-        {t:"测试先行交付",d:"shared / core / crisis / jobs 四目录 88 个用例全绿，另附 HTTP 全流程走查脚本（注册 → 打卡 → 照顾 → 整夜 → 商店 → 危机）。"},
-        {t:"部署骨架",d:"Docker × 3、K8s 清单、GitLab CI（lint → test → build ×3 → trivy → deploy），并如实登记 24 项偏差与 9 项缺陷到问题清单。"}
-      ],
-      evidence: [
-        {n:"103<em>/124</em>",c:"P0 功能覆盖 · 16 模块完整拆解"},
-        {n:"88",c:"测试用例全绿 · 覆盖红线 / RBAC / 审计 / 幂等"},
-        {n:"8",c:"份设计基线文档 · SRS / 架构 / DBD / API / 流程 / 原型"},
-        {n:"3",c:"服务故障域隔离 · core / crisis / jobs 独立部署"}
-      ],
-      actions: [{label:"GitHub / wangjojun ↗", href:"https://github.com/wangjojun", primary:true}]
+      art:"art-cc",
+      short:{zh:"蹭蹭",ja:"CengCeng",en:"CengCeng"},
+      nums:["103<em>/124</em>","88","8","3"],
+      actions:[{label:"GitHub / wangjojun ↗",href:"https://github.com/wangjojun",primary:true}],
+      l:{
+        zh:{
+          kicker:"01 / EMOTIONAL APP",
+          title:"CENGCENG<br>哄系情感宠物",
+          intro:"一个“不说教、不索取、只哄你”的睡前情感宠物。<strong>从 8 份设计文档到 88 个用例全绿，一人完成。</strong>",
+          role:"全栈独立开发 · 产品 / 服务端 / 部署",
+          delivery:"双服务 + 后台任务 · 103 条 P0 功能",
+          result:"P1 MVP 已交付 · 测试全绿",
+          process:[
+            {t:"产品与设计基线",d:"从竞品研究、SRS、原型、可研报告入手，拆出 16 个模块、124 条 FR，全部落成只读设计基线，开发逐条对齐。"},
+            {t:"契约先行",d:"shared-api 作为错误码、DDL、埋点白名单的唯一事实源，core / crisis / jobs 三个服务共享同一份契约，先定边界再写代码。"},
+            {t:"双服务故障域隔离",d:"cc-core 承载业务，cc-crisis 承载心理安全。core 宕机时，工单、排班、熔断、L4 审计仍然可用——安全系统不能陪主业务一起挂。"},
+            {t:"心理安全红线",d:"危机信号四件套 + 全局熔断 + 双人复核 + 18 岁与单独同意 + 埋点零原文，红线落到代码与数据库触发器（care_value 只升不降），不靠自觉。"},
+            {t:"测试先行交付",d:"shared / core / crisis / jobs 四目录 88 个用例全绿，另附 HTTP 全流程走查脚本（注册 → 打卡 → 照顾 → 整夜 → 商店 → 危机）。"},
+            {t:"部署骨架",d:"Docker × 3、K8s 清单、GitLab CI（lint → test → build ×3 → trivy → deploy），并如实登记 24 项偏差与 9 项缺陷到问题清单。"}
+          ],
+          evidence:[
+            "P0 功能覆盖 · 16 模块完整拆解",
+            "测试用例全绿 · 覆盖红线 / RBAC / 审计 / 幂等",
+            "份设计基线文档 · SRS / 架构 / DBD / API / 流程 / 原型",
+            "服务故障域隔离 · core / crisis / jobs 独立部署"
+          ]
+        },
+        ja:{
+          kicker:"01 / EMOTIONAL APP",
+          title:"CENGCENG<br>癒やしのペット",
+          intro:"「教えたり要求せず、ただそばで癒やす」就寝前の情感ペット。<strong>設計文書8点からテスト88件グリーンまで、一人で完成。</strong>",
+          role:"フルスタック単独開発 · プロダクト / サーバー / デプロイ",
+          delivery:"デュアルサービス + バックグラウンドジョブ · P0機能 103件",
+          result:"P1 MVP 納品済 · テスト全グリーン",
+          process:[
+            {t:"プロダクトと設計ベースライン",d:"競合調査・SRS・プロトタイプ・実現性分析から出発し、16モジュール・124 FR に分解。すべて読み取り専用の設計ベースラインに落とし込み、開発は毎条照合した。"},
+            {t:"契約ファースト",d:"shared-api をエラーコード・DDL・トラッキングホワイトリストの唯一の事実源とし、core / crisis / jobs の3サービスが同一契約を共有。境界を決めてから書く。"},
+            {t:"フォールトドメイン分離",d:"cc-core が業務、cc-crisis が心理的安全を担当。core が停止しても、チケット・シフト・サーキットブレーカー・L4監査は稼働し続ける——安全系は業務と一緒に落ちてはいけない。"},
+            {t:"心理的安全のレッドライン",d:"危機シグナル四件セット + 全遮断ブレーカー + ダブルチェック + 18歳と個別同意 + トラッキング原文ゼロ。レッドラインはコードと DB トリガー（care_value は単調増加）で強制し、自覚に頼らない。"},
+            {t:"テストファースト納品",d:"shared / core / crisis / jobs の4ディレクトリ88件のテストが全グリーン。さらに HTTP 全フロー走査スクリプト（登録 → チェックイン → お世話 → 通宵 → ショップ → 危機）を同梱。"},
+            {t:"デプロイの骨格",d:"Docker × 3、K8s マニフェスト、GitLab CI（lint → test → build ×3 → trivy → deploy）。24件の偏差・9件の欠陥は問題リストに正直に登録した。"}
+          ],
+          evidence:[
+            "P0機能カバレッジ · 16モジュール完全分解",
+            "テスト88件グリーン · レッドライン / RBAC / 監査 / 冪等を網羅",
+            "設計ベースライン文書8点 · SRS / アーキテクチャ / DBD / API / フロー / プロトタイプ",
+            "3サービスのフォールトドメイン分離 · core / crisis / jobs を個別デプロイ"
+          ]
+        },
+        en:{
+          kicker:"01 / EMOTIONAL APP",
+          title:"CENGCENG<br>SOOTHING PET",
+          intro:"A bedtime emotional pet that “never lectures, never demands — only soothes.” <strong>From 8 baseline documents to 88 green tests, done solo.</strong>",
+          role:"Solo full-stack · product / server / deployment",
+          delivery:"Dual services + background jobs · 103 P0 features",
+          result:"P1 MVP shipped · all tests green",
+          process:[
+            {t:"Product & design baseline",d:"Started from competitive research, SRS, prototypes and feasibility studies; broke down 16 modules and 124 FRs into read-only baseline docs that development checked against, line by line."},
+            {t:"Contract-first",d:"shared-api is the single source of truth for error codes, DDL and telemetry whitelists; core / crisis / jobs share one contract. Boundaries first, code second."},
+            {t:"Fault-domain isolation",d:"cc-core runs the business, cc-crisis runs psychological safety. If core dies, tickets, shifts, circuit breakers and L4 audits still run — safety must not go down with the business."},
+            {t:"Psychological-safety redlines",d:"Crisis four-piece + global circuit breaker + dual review + 18+ individual consent + zero raw telemetry. Enforced in code and DB triggers (care_value monotonic), not by good intentions."},
+            {t:"Test-first delivery",d:"88 tests across shared / core / crisis / jobs all green, plus an HTTP full-flow walkthrough script (register → check-in → care → overnight → store → crisis)."},
+            {t:"Deployment skeleton",d:"Docker × 3, K8s manifests, GitLab CI (lint → test → build ×3 → trivy → deploy), with 24 deviations and 9 defects logged honestly in the issue list."}
+          ],
+          evidence:[
+            "P0 coverage · 16 modules fully decomposed",
+            "88 tests green · redlines / RBAC / audit / idempotency",
+            "baseline docs · SRS / architecture / DBD / API / flows / prototype",
+            "services isolated · core / crisis / jobs deployed independently"
+          ]
+        }
+      }
     },
     msc: {
-      kicker: "02 / MULTI-AGENT",
-      title: "MINI<br>SOFTWARE CO.",
-      art: "art-msc",
-      intro: "五个 AI 角色组成一家迷你软件公司：<strong>需求 → 架构 → 编码 → 评审 → 真实测试 → 自动修复，三轮收敛 60% → 80% → 100%。</strong>",
-      role: "AI 工程 · 系统设计与实现",
-      delivery: "CrewAI 流水线 · 质量门禁 · Web 控制台",
-      result: "demo 免 API Key 可复现 · llm 模式真实生成",
-      process: [
-        {t:"需求与验收标准",d:"产品经理 Agent 拆解需求、定义 CLI 契约，并先行编写 T01–T05 黑盒验收标准——先定义“什么是完成”，再开工。"},
-        {t:"架构与逆向评审",d:"架构师产出架构文档后，产品经理逆向评审；must_fix 非空时触发一轮受约束的修订。需求 ↔ 架构双向校验成环。"},
-        {t:"编码与评审",d:"工程师 Agent 生成完整单文件代码，评审专家检查功能覆盖、错误路径、数据一致性与依赖——过程约束，而非最终门禁。"},
-        {t:"真实执行测试",d:"QA Agent 在隔离沙箱里真实启动 Python 子进程执行黑盒用例。通过率不靠模型口述，靠可复现的执行结果。"},
-        {t:"失败自动修复闭环",d:"失败用例生成修复报告回到工程师 Agent，第 1 轮 60% → 第 2 轮 80% → 第 3 轮 100%，达标即停，不空转。"},
-        {t:"度量与真实部署",d:"逐阶段记录耗时与 token；--resume 断点续跑；--deploy 将验收通过的代码打包成 zipapp 制品并通过冒烟测试。"}
-      ],
-      evidence: [
-        {n:"100<em>%</em>",c:"第 3 轮自动验收通过率（非硬编码，真实执行统计）"},
-        {n:"5",c:"个智能体角色 · PM / 架构师 / 工程师 / 评审 / QA"},
-        {n:"3",c:"轮失败-修复自动收敛 · 每轮留存代码快照与 diff"},
-        {n:"0",c:"依赖的 Web 控制台 · 上传需求、一键运行、实时看产物"}
-      ],
-      actions: [{label:"GitHub / wangjojun ↗", href:"https://github.com/wangjojun", primary:true}]
+      art:"art-msc",
+      short:{zh:"迷你软件公司",ja:"ミニソフトウェア会社",en:"Mini Software Co."},
+      nums:["100<em>%</em>","5","3","0"],
+      actions:[{label:"GitHub / wangjojun ↗",href:"https://github.com/wangjojun",primary:true}],
+      l:{
+        zh:{
+          kicker:"02 / MULTI-AGENT",
+          title:"MINI<br>SOFTWARE CO.",
+          intro:"五个 AI 角色组成一家迷你软件公司：<strong>需求 → 架构 → 编码 → 评审 → 真实测试 → 自动修复，三轮收敛 60% → 80% → 100%。</strong>",
+          role:"AI 工程 · 系统设计与实现",
+          delivery:"CrewAI 流水线 · 质量门禁 · Web 控制台",
+          result:"demo 免 API Key 可复现 · llm 模式真实生成",
+          process:[
+            {t:"需求与验收标准",d:"产品经理 Agent 拆解需求、定义 CLI 契约，并先行编写 T01–T05 黑盒验收标准——先定义“什么是完成”，再开工。"},
+            {t:"架构与逆向评审",d:"架构师产出架构文档后，产品经理逆向评审；must_fix 非空时触发一轮受约束的修订。需求 ↔ 架构双向校验成环。"},
+            {t:"编码与评审",d:"工程师 Agent 生成完整单文件代码，评审专家检查功能覆盖、错误路径、数据一致性与依赖——过程约束，而非最终门禁。"},
+            {t:"真实执行测试",d:"QA Agent 在隔离沙箱里真实启动 Python 子进程执行黑盒用例。通过率不靠模型口述，靠可复现的执行结果。"},
+            {t:"失败自动修复闭环",d:"失败用例生成修复报告回到工程师 Agent，第 1 轮 60% → 第 2 轮 80% → 第 3 轮 100%，达标即停，不空转。"},
+            {t:"度量与真实部署",d:"逐阶段记录耗时与 token；--resume 断点续跑；--deploy 将验收通过的代码打包成 zipapp 制品并通过冒烟测试。"}
+          ],
+          evidence:[
+            "第 3 轮自动验收通过率（非硬编码，真实执行统计）",
+            "个智能体角色 · PM / 架构师 / 工程师 / 评审 / QA",
+            "轮失败-修复自动收敛 · 每轮留存代码快照与 diff",
+            "依赖的 Web 控制台 · 上传需求、一键运行、实时看产物"
+          ]
+        },
+        ja:{
+          kicker:"02 / MULTI-AGENT",
+          title:"MINI<br>SOFTWARE CO.",
+          intro:"5つのAI役割がつくるミニソフトウェア会社：<strong>要求 → 設計 → 実装 → 評価 → 実テスト → 自動修正で、3ラウンドに 60% → 80% → 100% へ収束。</strong>",
+          role:"AI エンジニアリング · システム設計と実装",
+          delivery:"CrewAI パイプライン · 品質ゲート · Web コンソール",
+          result:"demo は API キー不要で再現 · llm モードは実生成",
+          process:[
+            {t:"要求と受入基準",d:"PMエージェントが要求を分解し CLI 契約を定義、T01–T05 のブラックボックス受入基準を先に作る——「完成の定義」を決めてから着手する。"},
+            {t:"設計とリバースレビュー",d:"アーキテクトの設計書に対し PM が逆方向レビュー。must_fix があれば制約付きで1回改訂。要求 ↔ 設計の双方向検証がループする。"},
+            {t:"実装とコードレビュー",d:"エンジニアエージェントが単一ファイルのコードを生成し、レビュアーが機能カバレッジ・エラーパス・データ一貫性・依存関係を確認——プロセス上の約束であり、最終判定ではない。"},
+            {t:"実行テスト",d:"QAエージェントが隔離サンドボックスで Python サブプロセスを実際に起動し、ブラックボックス用例を実行。通過率はモデルの口約束でなく、再現可能な実行結果で判定する。"},
+            {t:"失敗-修正のループ",d:"失敗用例の修正レポートがエンジニアエージェントへ戻り、1ラウンド目 60% → 2ラウンド目 80% → 3ラウンド目 100%。達成で即停止、回り続けない。"},
+            {t:"計測と実デプロイ",d:"各ステージの時間とトークンを計測。--resume で中断再開、--deploy で受入済みコードを zipapp 制品にパッケージしスモークテスト。"}
+          ],
+          evidence:[
+            "第3ラウンドの自動受入通過率（ハードコードでなく実行統計）",
+            "エージェント役割 · PM / アーキテクト / エンジニア / レビュー / QA",
+            "失敗-修正による自動収束 · 各ラウンドにコードスナップショットと diff",
+            "依存ゼロの Web コンソール · 要求をアップロード、ワンクリック実行、成果物をリアルタイム表示"
+          ]
+        },
+        en:{
+          kicker:"02 / MULTI-AGENT",
+          title:"MINI<br>SOFTWARE CO.",
+          intro:"Five AI roles run a mini software company: <strong>requirements → architecture → coding → review → real tests → auto-fix, converging 60% → 80% → 100% in three rounds.</strong>",
+          role:"AI engineering · system design & implementation",
+          delivery:"CrewAI pipeline · quality gates · web console",
+          result:"reproducible demo without API keys · llm mode generates for real",
+          process:[
+            {t:"Requirements & acceptance",d:"The PM agent breaks down requirements, defines the CLI contract and writes black-box acceptance tests T01–T05 first — define “done” before starting."},
+            {t:"Architecture & reverse review",d:"The PM reverse-reviews the architect's doc; a non-empty must_fix triggers one constrained revision. Requirements ↔ architecture verify each other in a loop."},
+            {t:"Coding & review",d:"The engineer agent writes complete single-file code; the reviewer checks coverage, error paths, data consistency and dependencies — a process constraint, not the final gate."},
+            {t:"Real execution testing",d:"The QA agent launches Python subprocesses in an isolated sandbox and runs black-box cases. Pass rate comes from reproducible execution, not model claims."},
+            {t:"Failure-fix loop",d:"Failed cases produce fix reports back to the engineer agent: round 1 60% → round 2 80% → round 3 100%. Stop at target, no spinning."},
+            {t:"Measurement & real deployment",d:"Per-stage time and token metering; --resume checkpoint resume; --deploy packages accepted code into a zipapp artifact and smoke-tests it."}
+          ],
+          evidence:[
+            "round-3 automated acceptance rate (real execution stats, not hardcoded)",
+            "agent roles · PM / architect / engineer / reviewer / QA",
+            "rounds of failure-fix convergence · code snapshots and diffs per round",
+            "dependency web console · upload a requirement, one-click run, live artifacts"
+          ]
+        }
+      }
     }
   };
   const REAL_IDS = ["cengceng","msc"];
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ================= 语言状态 ================= */
+  let LANG = (function(){
+    try{const s=localStorage.getItem("wjj-lang");if(s&&T[s])return s;}catch(_){}
+    const n=(navigator.language||"zh").toLowerCase();
+    if(n.indexOf("ja")===0)return "ja";
+    if(n.indexOf("zh")===0)return "zh";
+    return "en";
+  })();
+
+  function applyLang(lang){
+    if(!T[lang])return;
+    LANG=lang;
+    document.documentElement.lang = lang==="zh"?"zh-CN":(lang==="ja"?"ja":"en");
+    document.title = T[lang].docTitle;
+    const md=document.querySelector('meta[name="description"]');
+    if(md)md.setAttribute("content",T[lang].docDesc);
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      const v=T[lang][el.dataset.i18n];
+      if(v==null)return;
+      el.textContent=v;
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){
+      const v=T[lang][el.dataset.i18nHtml];
+      if(v==null)return;
+      el.innerHTML=v;
+    });
+    document.querySelectorAll(".lang-btn").forEach(function(b){
+      const on=b.dataset.lang===lang;
+      b.classList.toggle("on",on);
+      b.setAttribute("aria-pressed",String(on));
+    });
+    if(currentId&&project.classList.contains("open"))renderProject(currentId,false);
+    try{localStorage.setItem("wjj-lang",lang);}catch(_){}
+  }
+  document.querySelectorAll(".lang-btn").forEach(function(b){
+    b.addEventListener("click",function(){applyLang(b.dataset.lang);});
+  });
 
   /* ================= 3D 动画背景（零依赖 Canvas） ================= */
   (function(){
@@ -431,16 +664,9 @@
       const count = W<700?30:64;
       parts=[];
       for(let i=0;i<count;i++){
-        parts.push({
-          x:(Math.random()*2-1)*640,
-          y:(Math.random()*2-1)*330,
-          z:(Math.random()*2-1)*475,
-          r:Math.random()*1.7+.6,
-          o:Math.random()*.55+.3,
-          a:Math.random()*Math.PI*2,
-          s:Math.random()*.7+.35,
-          hot:Math.random()<.26
-        });
+        parts.push({x:(Math.random()*2-1)*640,y:(Math.random()*2-1)*330,z:(Math.random()*2-1)*475,
+          r:Math.random()*1.7+.6,o:Math.random()*.55+.3,a:Math.random()*Math.PI*2,
+          s:Math.random()*.7+.35,hot:Math.random()<.26});
       }
     }
     function resize(){
@@ -462,8 +688,6 @@
       ctx.clearRect(0,0,W,H);
       const small=W<700;
       const cols=small?15:24, rows=small?9:13, xSpan=1500, zMax=1000;
-
-      /* --- 3D 线框地形波浪 --- */
       const pts=[];
       for(let r=0;r<=rows;r++){
         pts[r]=[];
@@ -489,8 +713,6 @@
         ctx.strokeStyle="rgba(17,17,15,"+(0.02+0.085*Math.max(0,(k-.35)/.65)).toFixed(3)+")";
         ctx.stroke();
       }
-
-      /* --- 漂浮粒子场（慢速 Y 轴旋转 + 视差） --- */
       const rot=t*.07, cos=Math.cos(rot), sin=Math.sin(rot);
       for(let i=0;i<parts.length;i++){
         const p=parts[i];
@@ -564,7 +786,6 @@
   rail.addEventListener("pointerup",endDrag);
   rail.addEventListener("pointercancel",endDrag);
 
-  /* 卡片 3D 倾斜（仅桌面指针） */
   cards.forEach(c=>{
     const inner=c.querySelector(".card-in");
     c.addEventListener("pointermove",e=>{
@@ -584,7 +805,6 @@
     });
   });
 
-  /* 滚轮：到边界后交还给页面滚动（不困住用户） */
   stage.addEventListener("wheel",e=>{
     const now=Date.now();
     if(Math.abs(e.deltaY)<24||now-lastWheel<380)return;
@@ -642,40 +862,44 @@
   const heroMedia=document.getElementById("heroMedia");
   let currentId=null;
 
-  function openProject(id){
+  function renderProject(id, doScroll){
     const p=PROJECTS[id];
     if(!p)return;
-    currentId=id;
-    document.getElementById("projectKicker").textContent=p.kicker;
-    document.getElementById("projectTitle").innerHTML=p.title;
-    document.getElementById("heroRole").textContent=p.role;
-    document.getElementById("projectIntro").innerHTML=p.intro;
-    document.getElementById("factRole").textContent=p.role;
-    document.getElementById("factDelivery").textContent=p.delivery;
-    document.getElementById("factResult").textContent=p.result;
-    document.getElementById("processList").innerHTML=p.process.map(s=>
+    const L=p.l[LANG]||p.l.zh;
+    document.getElementById("projectKicker").textContent=L.kicker;
+    document.getElementById("projectTitle").innerHTML=L.title;
+    document.getElementById("heroRole").textContent=L.role;
+    document.getElementById("projectIntro").innerHTML=L.intro;
+    document.getElementById("factRole").textContent=L.role;
+    document.getElementById("factDelivery").textContent=L.delivery;
+    document.getElementById("factResult").textContent=L.result;
+    document.getElementById("processList").innerHTML=L.process.map(s=>
       `<div class="process-item"><h4>${s.t}</h4><p>${s.d}</p></div>`).join("");
-    document.getElementById("evidenceWall").innerHTML=p.evidence.map((s,i)=>
-      `<figure class="evidence-piece${i===0?" wide":""}"><div class="num">${s.n}</div><figcaption>${s.c}</figcaption></figure>`).join("");
+    document.getElementById("evidenceWall").innerHTML=p.nums.map((n,i)=>
+      `<figure class="evidence-piece${i===0?" wide":""}"><div class="num">${n}</div><figcaption>${L.evidence[i]}</figcaption></figure>`).join("");
     document.getElementById("projectActions").innerHTML=p.actions.map(a=>
       `<a class="${a.primary?"primary":""}" href="${a.href}" target="_blank" rel="noopener">${a.label}</a>`).join("");
     heroMedia.className="hero-media "+p.art;
     const idx=REAL_IDS.indexOf(id);
     const nextId=REAL_IDS[(idx+1)%REAL_IDS.length];
-    document.getElementById("nextNumber").textContent=PROJECTS[nextId].kicker.slice(0,2);
-    document.getElementById("nextTitle").textContent=nextId==="cengceng"?"蹭蹭":"迷你软件公司";
+    document.getElementById("nextNumber").textContent=PROJECTS[nextId].l[LANG].kicker.slice(0,2);
+    document.getElementById("nextTitle").textContent=PROJECTS[nextId].short[LANG];
     document.getElementById("nextProject").onclick=()=>openProject(nextId);
-    project.classList.add("open");
-    project.setAttribute("aria-hidden","false");
-    document.body.classList.add("project-open");
-    project.scrollTop=0;
-    /* 交错入场 */
+    if(doScroll)project.scrollTop=0;
     requestAnimationFrame(()=>{
       project.querySelectorAll(".process-item,.evidence-piece").forEach((el,i)=>{
         el.style.transitionDelay=(i*70)+"ms";
         requestAnimationFrame(()=>el.classList.add("in"));
       });
     });
+  }
+  function openProject(id){
+    if(!PROJECTS[id])return;
+    currentId=id;
+    renderProject(id,true);
+    project.classList.add("open");
+    project.setAttribute("aria-hidden","false");
+    document.body.classList.add("project-open");
   }
   function closeProject(){
     project.classList.remove("open");
@@ -691,21 +915,24 @@
     toast.textContent=msg;
     toast.classList.add("show");
     clearTimeout(toast._t);
-    toast._t=setTimeout(()=>toast.classList.remove("show"),2400);
+    toast._t=setTimeout(()=>toast.classList.remove("show"),2600);
   }
   document.getElementById("copyEmail").addEventListener("click",async()=>{
     const mail="wangjunjun@sinosoft.hk";
     try{
       await navigator.clipboard.writeText(mail);
-      showToast("邮箱已复制 · "+mail);
+      showToast(T[LANG].toastCopied+" · "+mail);
     }catch(_){
       const ta=document.createElement("textarea");
       ta.value=mail;document.body.appendChild(ta);ta.select();
-      try{document.execCommand("copy");showToast("邮箱已复制 · "+mail);}
+      try{document.execCommand("copy");showToast(T[LANG].toastCopied+" · "+mail);}
       catch(e){showToast(mail);}
       document.body.removeChild(ta);
     }
   });
+
+  /* ================= 初始化语言 ================= */
+  applyLang(LANG);
   </script>
 </body>
 </html>
