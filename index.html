@@ -116,10 +116,6 @@
       repeating-linear-gradient(0deg,rgba(120,170,255,.13) 0 1px,transparent 1px 40px),
       repeating-linear-gradient(90deg,rgba(120,170,255,.13) 0 1px,transparent 1px 40px),
       linear-gradient(160deg,#0c1a2c,#152c46)}
-    .art-msc .shot{position:absolute;z-index:1;left:-2%;top:7%;width:104%;display:block;border-radius:6px;overflow:hidden;background:#0e1a28;border:1px solid rgba(140,190,255,.34);box-shadow:0 26px 50px rgba(0,0,0,.72),0 0 0 1px rgba(0,0,0,.35);transform:rotate(-2.4deg)}
-    .art-msc .shot i{display:block;height:13px;background:#17283b;border-bottom:1px solid rgba(140,190,255,.16);position:relative}
-    .art-msc .shot i:after{content:"";position:absolute;left:7px;top:4.5px;width:4px;height:4px;border-radius:50%;background:#ef4b23;box-shadow:8px 0 0 rgba(255,190,110,.55),16px 0 0 rgba(140,190,255,.42)}
-    .art-msc .shot img{display:block;width:100%;height:auto}
     .art-next{background:radial-gradient(rgba(17,17,15,.22) 1px,transparent 1.6px) 0 0/14px 14px,#dedbd2}
     .art-next em{color:rgba(17,17,15,.4);text-shadow:none}
     .art-next:after{background:linear-gradient(180deg,transparent 60%,rgba(255,255,255,.35))}
@@ -169,7 +165,20 @@
     .project-nav button i:nth-child(2){transform:rotate(-45deg)}
     .project-hero{height:100vh;height:100svh;min-height:620px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b0d0e}
     .hero-media{position:absolute;inset:0;opacity:.55;animation:heroZoom 1.6s var(--ease)}
-    .hero-media.hero-shot{opacity:.42;background-color:#0b0d0e;background-position:center 16%;background-size:cover;background-repeat:no-repeat;animation:none}
+    /* ---------- 真实界面 ---------- */
+    .project-shot{background:#f0eee7;color:#111;padding:7vh 7vw 12vh}
+    .project-shot[hidden]{display:none}
+    .shot-head{display:grid;grid-template-columns:1fr 2.6fr;gap:7vw;margin-bottom:5.5vh}
+    .shot-head p{font-size:clamp(19px,2.1vw,30px);line-height:1.42;letter-spacing:-.025em;margin:0;max-width:52ch}
+    .shot-frame{margin:0;border-radius:10px;overflow:hidden;border:1px solid rgba(17,17,15,.16);box-shadow:0 40px 90px rgba(21,18,14,.2);background:#0b1020}
+    .shot-bar{height:36px;background:#151b2c;display:flex;align-items:center;padding:0 14px;position:relative}
+    .shot-bar i{width:7px;height:7px;border-radius:50%;background:#ef4b23;box-shadow:10px 0 0 rgba(255,190,110,.65),20px 0 0 rgba(140,190,255,.5)}
+    .shot-bar span{margin-left:14px;font-size:8px;letter-spacing:.14em;color:#6b7c99}
+    .shot-frame img{display:block;width:100%;height:auto}
+    .shot-frame a{display:block;cursor:zoom-in}
+    .shot-notes{list-style:none;margin:3.5vh 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+    .shot-notes li{border-top:1px solid #b8b4aa;padding-top:16px;font-size:11px;line-height:1.8;letter-spacing:.01em}
+    .shot-notes b{display:block;font-size:8px;font-weight:650;letter-spacing:.18em;color:var(--orange);margin-bottom:8px}
     @keyframes heroZoom{from{transform:scale(1.12)}to{transform:none}}
     .hero-shade{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 0,rgba(8,10,11,.15) 42%,rgba(8,10,11,.86) 100%),linear-gradient(180deg,rgba(0,0,0,.55),transparent 30%,rgba(0,0,0,.5))}
     .project-hero>p{position:absolute;z-index:2;top:17%;font-size:8px;letter-spacing:.2em}
@@ -180,28 +189,29 @@
     .project-scroll i{display:block;width:1px;height:44px;background:#fff;margin:14px auto -31px;animation:scrollLine 1.8s infinite var(--ease)}
     @keyframes scrollLine{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
 
-    .project-intro{min-height:88vh;background:#f0eee7;color:#111;padding:12vh 7vw;display:grid;grid-template-columns:1fr 2.6fr;gap:7vw}
+    .project-intro{background:#f0eee7;color:#111;padding:13vh 7vw 6vh;display:grid;grid-template-columns:1fr 2.6fr;gap:7vw}
     .eyebrow{font-size:9px;font-weight:650;letter-spacing:.18em}
     .project-intro>p{font-size:clamp(34px,5.4vw,84px);line-height:1;letter-spacing:-.065em;margin:0}
     .project-intro>p strong{color:var(--orange);font-weight:520}
-    .facts{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:8vh;font-size:8px;line-height:2;letter-spacing:.15em;border-top:1px solid #aaa}
+    .facts{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:5.5vh;font-size:8px;line-height:2;letter-spacing:.15em;border-top:1px solid #aaa}
     .facts b{font-size:11px;line-height:1.45;letter-spacing:0;font-weight:600}
 
     .project-process{background:#151716;padding:12vh 7vw;display:grid;grid-template-columns:1fr 1.5fr;gap:8vw}
     .process-head span{font-size:9px;letter-spacing:.18em}
-    .process-head h3{font-size:clamp(38px,5.4vw,84px);line-height:.92;letter-spacing:-.065em;font-weight:500;margin:34px 0}
+    .process-head h3{font-size:clamp(32px,4vw,64px);line-height:.96;letter-spacing:-.06em;font-weight:500;margin:34px 0}
     .process-list{counter-reset:step}
-    .process-item{counter-increment:step;padding:28px 0 28px 52px;border-top:1px solid #4a4d4a;position:relative;opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-    .process-item.in{opacity:1;transform:none}
+    .process-item{counter-increment:step;padding:28px 0 28px 52px;border-top:1px solid #4a4d4a;position:relative}
+    .process-item.in{animation:itemIn .7s var(--ease) backwards}
     .process-item:before{content:"0" counter(step);position:absolute;left:0;top:31px;color:var(--orange);font-size:9px;letter-spacing:.12em}
     .process-item h4{font-size:21px;letter-spacing:-.035em;margin:0 0 8px;font-weight:520}
     .process-item p{margin:0;color:#b7bbb6;font-size:13px;line-height:1.75}
 
     .evidence{background:#0b0d0e;padding:8vw;display:grid;grid-template-columns:1fr 1fr;gap:3vw}
-    .evidence-piece{position:relative;overflow:hidden;min-height:44vh;background:#16181a;border:1px solid #2a2d2e;padding:5% 4%;margin:0;opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease),border-color .35s}
-    .evidence-piece.in{opacity:1;transform:none}
+    .evidence-piece{position:relative;overflow:hidden;min-height:32vh;background:#16181a;border:1px solid #2a2d2e;padding:5% 4%;margin:0;transition:border-color .35s}
+    .evidence-piece.in{animation:itemIn .7s var(--ease) backwards}
+    @keyframes itemIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
     .evidence-piece:hover{border-color:var(--orange)}
-    .evidence-piece.wide{grid-column:1/-1;min-height:34vh}
+    .evidence-piece.wide{grid-column:1/-1;min-height:24vh}
     .evidence-piece .num{font-size:clamp(44px,6.4vw,96px);font-weight:520;letter-spacing:-.07em;line-height:1;color:#f5f3eb}
     .evidence-piece .num em{font-style:normal;color:var(--orange)}
     .evidence-piece figcaption{margin-top:14px;font-size:9px;line-height:1.7;letter-spacing:.08em;color:#9aa09b}
@@ -245,7 +255,6 @@
       .art em .cap{font-size:6.5px;letter-spacing:.2em;margin-bottom:7px}
       .art em b{font-size:8.6vw}
       .art em.cjk b{font-size:8vw}
-      .art-msc .shot{top:4%}
       .stage-foot{left:18px;right:18px}
       .hint{max-width:66%;line-height:1.7}
       .statement{padding:12vh 20px}
@@ -266,6 +275,13 @@
       .project-scroll{bottom:24px}
       .project-intro{grid-template-columns:1fr;padding:11vh 22px;gap:6vh}
       .project-intro>p{font-size:10.6vw}
+      .project-shot{padding:8vh 22px 10vh}
+      .shot-head{grid-template-columns:1fr;gap:16px;margin-bottom:4vh}
+      .shot-head p{font-size:16px}
+      .shot-bar{height:28px;padding:0 11px}
+      .shot-bar i{width:6px;height:6px;box-shadow:9px 0 0 rgba(255,190,110,.65),18px 0 0 rgba(140,190,255,.5)}
+      .shot-notes{grid-template-columns:1fr;gap:16px;margin-top:3vh}
+      .shot-notes li{font-size:10.5px}
       .facts{grid-column:1;grid-template-columns:1fr;gap:18px;padding-top:5vh}
       .project-process{grid-template-columns:1fr;padding:10vh 22px;gap:5vh}
       .process-list{margin-top:-14px}
@@ -328,7 +344,7 @@
         <a class="card" href="#msc" data-id="msc" aria-label="打开迷你软件公司项目详情">
           <span class="card-in">
             <span class="card-meta"><b>02 / MULTI-AGENT</b><b>60% → 100%</b></span>
-            <span class="art art-msc"><span class="shot"><i></i><img src="assets/msc-console.jpg" alt="迷你软件公司控制台：运行状态与实时日志，第 3 轮通过率 100%" decoding="async"></span><em><span class="cap">CREWAI PIPELINE</span><b>5 AGENTS<br>1 PIPELINE</b></em></span>
+            <span class="art art-msc"><em><span class="cap">CREWAI PIPELINE</span><b>5 AGENTS<br>1 PIPELINE</b></em></span>
             <span class="card-copy"><b data-i18n="card2t">迷你软件公司 · CrewAI 多智能体</b><small data-i18n="card2s">AI 工程 · 五角色质量门禁</small><strong data-i18n="card2x">需求到 zipapp，三轮自动收敛</strong></span>
           </span>
         </a>
@@ -390,6 +406,11 @@
         <span><span data-i18n="factsDelivery">核心交付</span><br><b id="factDelivery"></b></span>
         <span><span data-i18n="factsResult">结果 / 状态</span><br><b id="factResult"></b></span>
       </div>
+    </section>
+    <section class="project-shot" id="projectShot" hidden>
+      <div class="shot-head"><span class="eyebrow" id="shotLabel">THE PRODUCT / 真实界面</span><p id="shotCap"></p></div>
+      <figure class="shot-frame"><div class="shot-bar"><i></i><span id="shotUrl">localhost · console</span></div><a id="shotLink" href="assets/msc-console-full.jpg" target="_blank" rel="noopener"><img id="shotImg" src="" alt=""></a></figure>
+      <ul class="shot-notes" id="shotNotes"></ul>
     </section>
     <section class="project-process"><div class="process-head"><span data-i18n="builtLabel">WHAT I BUILT</span><h3 data-i18n-html="builtTitle">不是“参与”，<br>是我亲手完成。</h3></div>
       <div class="process-list" id="processList"></div>
@@ -552,7 +573,7 @@
     },
     msc: {
       art:"art-msc",
-      heroImg:"assets/msc-console-full.jpg",
+      shotImg:"assets/msc-console-full.jpg",
       short:{zh:"迷你软件公司",ja:"ミニソフトウェア会社",en:"Mini Software Co."},
       nums:["100<em>%</em>","5","3","0"],
       actions:[{label:"GitHub / wangjojun ↗",href:"https://github.com/wangjojun",primary:true}],
@@ -564,6 +585,13 @@
           role:"AI 工程 · 系统设计与实现",
           delivery:"CrewAI 流水线 · 质量门禁 · Web 控制台",
           result:"demo 免 API Key 可复现 · llm 模式真实生成",
+          shotLabel:"THE PRODUCT / 真实界面",
+          shotCap:"这是给非技术用户的操作台：上传需求、选模式、跑一遍，就能实时看到五个角色在做什么、跑到第几轮、通过率多少、产物落在哪里。",
+          shotNotes:[
+            "运行状态：模式 / 迭代预算 / 当前轮次 / 已达标 100%，一眼看清跑到哪一步",
+            "实时日志：Round 3 确定性门禁 PASS 5/5，失败用例自动回灌给工程师 Agent 修复",
+            "产物浏览：架构、评审、测试报告与每轮代码快照全部留档，随时复查"
+          ],
           process:[
             {t:"需求与验收标准",d:"产品经理 Agent 拆解需求、定义 CLI 契约，并先行编写 T01–T05 黑盒验收标准——先定义“什么是完成”，再开工。"},
             {t:"架构与逆向评审",d:"架构师产出架构文档后，产品经理逆向评审；must_fix 非空时触发一轮受约束的修订。需求 ↔ 架构双向校验成环。"},
@@ -586,6 +614,13 @@
           role:"AI エンジニアリング · システム設計と実装",
           delivery:"CrewAI パイプライン · 品質ゲート · Web コンソール",
           result:"demo は API キー不要で再現 · llm モードは実生成",
+          shotLabel:"THE PRODUCT / 実際の画面",
+          shotCap:"非エンジニア向けのコンソール。要求をアップロードし、モードを選んで実行すれば、5つの役割が何をしているか、何ラウンド目か、通過率はいくつか、成果物がどこにあるかをリアルタイムで確認できる。",
+          shotNotes:[
+            "実行状態：モード / ラウンド予算 / 現在のラウンド / 達成率 100% が一目でわかる",
+            "リアルタイムログ：Round 3 の決定論的ゲートは PASS 5/5。失敗用例は自動でエンジニア Agent に戻され修正される",
+            "成果物ブラウザ：設計・レビュー・テスト報告書と各ラウンドのコードスナップショットを逐次保存"
+          ],
           process:[
             {t:"要求と受入基準",d:"PMエージェントが要求を分解し CLI 契約を定義、T01–T05 のブラックボックス受入基準を先に作る——「完成の定義」を決めてから着手する。"},
             {t:"設計とリバースレビュー",d:"アーキテクトの設計書に対し PM が逆方向レビュー。must_fix があれば制約付きで1回改訂。要求 ↔ 設計の双方向検証がループする。"},
@@ -608,6 +643,13 @@
           role:"AI engineering · system design & implementation",
           delivery:"CrewAI pipeline · quality gates · web console",
           result:"reproducible demo without API keys · llm mode generates for real",
+          shotLabel:"THE PRODUCT / REAL UI",
+          shotCap:"A console for non-technical users: drop in requirements, pick a mode, hit run — then watch what each of the five roles is doing, which round it is on, the pass rate, and where the artifacts land.",
+          shotNotes:[
+            "Run status: mode / round budget / current round / 100% reached — the whole run at a glance",
+            "Live log: round 3 deterministic gate PASS 5/5, failed cases routed back to the engineer agent automatically",
+            "Artifact browser: architecture, review and test reports plus per-round code snapshots kept for review"
+          ],
           process:[
             {t:"Requirements & acceptance",d:"The PM agent breaks down requirements, defines the CLI contract and writes black-box acceptance tests T01–T05 first — define “done” before starting."},
             {t:"Architecture & reverse review",d:"The PM reverse-reviews the architect's doc; a non-empty must_fix triggers one constrained revision. Requirements ↔ architecture verify each other in a loop."},
@@ -815,15 +857,19 @@
     layout();
   }
 
+  let pid=null, captured=false;
   rail.addEventListener("pointerdown",e=>{
     dragging=true;moved=false;startX=e.clientX;startRing=ring;trail=[];
+    pid=e.pointerId;captured=false;
     rail.classList.add("dragging");
-    try{rail.setPointerCapture(e.pointerId);}catch(_){}
   });
   rail.addEventListener("pointermove",e=>{
     if(!dragging)return;
     const dx=e.clientX-startX;
-    if(Math.abs(dx)>8)moved=true;
+    if(Math.abs(dx)>8){
+      moved=true;
+      if(!captured){try{rail.setPointerCapture(pid);captured=true;}catch(_){}}
+    }
     ring=startRing+dx*0.16;
     const now=performance.now();
     trail.push({x:e.clientX,t:now});
@@ -851,16 +897,38 @@
       inner.style.transform=`perspective(800px) rotateY(${dx*7}deg) rotateX(${-dy*7}deg)`;
     });
     c.addEventListener("pointerleave",()=>{inner.style.transform="";});
-    c.addEventListener("click",e=>{
-      if(moved)return;
-      const rel=(((ring+i*STEP)%360)+540)%360-180;
-      if(Math.abs(rel)>50)return;
-      const id=c.dataset.id;
-      if(id&&PROJECTS[id])openProject(id);
-      else if(!id)document.getElementById("contact").scrollIntoView({behavior:"smooth"});
-      e.preventDefault();
-    });
   });
+
+  /* 点击：委托到环轨——pointer capture 会改写 click 的 target，用坐标兜底 */
+  rail.addEventListener("click",e=>{
+    if(moved)return;
+    let card=e.target&&e.target.closest?e.target.closest(".card"):null;
+    if(!card&&typeof e.clientX==="number"){
+      const el=document.elementFromPoint(e.clientX,e.clientY);
+      card=el&&el.closest?el.closest(".card"):null;
+    }
+    if(!card)return;
+    const idx=cards.indexOf(card);
+    if(idx<0)return;
+    const rel=(((ring+idx*STEP)%360)+540)%360-180;
+    if(Math.abs(rel)>50)return;
+    e.preventDefault();
+    const id=card.dataset.id;
+    if(id&&PROJECTS[id]){
+      openProject(id);
+      try{history.replaceState(null,"","#"+id);}catch(_){}
+    }else{
+      document.getElementById("contact").scrollIntoView({behavior:"smooth"});
+      try{history.replaceState(null,"",location.pathname+location.search);}catch(_){}
+    }
+  });
+
+  function openFromHash(){
+    const id=(location.hash||"").replace("#","");
+    if(id&&PROJECTS[id])openProject(id);
+  }
+  window.addEventListener("hashchange",openFromHash);
+  if(location.hash)setTimeout(openFromHash,300);
 
   /* 滚轮：横向手势/Shift+滚轮 甩动环轨；纵向滚轮交还给页面滚动 */
   stage.addEventListener("wheel",e=>{
@@ -930,16 +998,28 @@
     document.getElementById("factResult").textContent=L.result;
     document.getElementById("processList").innerHTML=L.process.map(s=>
       `<div class="process-item"><h4>${s.t}</h4><p>${s.d}</p></div>`).join("");
-    document.getElementById("evidenceWall").innerHTML=p.nums.map((n,i)=>
-      `<figure class="evidence-piece${i===0?" wide":""}"><div class="num">${n}</div><figcaption>${L.evidence[i]}</figcaption></figure>`).join("");
+    document.getElementById("evidenceWall").innerHTML=p.nums.map((n,i)=>{
+      const lastOne=i===p.nums.length-1&&(p.nums.length-1)%2===1;
+      return `<figure class="evidence-piece${i===0||lastOne?" wide":""}"><div class="num">${n}</div><figcaption>${L.evidence[i]}</figcaption></figure>`;
+    }).join("");
     document.getElementById("projectActions").innerHTML=p.actions.map(a=>
       `<a class="${a.primary?"primary":""}" href="${a.href}" target="_blank" rel="noopener">${a.label}</a>`).join("");
-    if(p.heroImg){
-      heroMedia.className="hero-media hero-shot";
-      heroMedia.style.backgroundImage='url("'+p.heroImg+'")';
+    heroMedia.className="hero-media "+p.art;
+    const shot=document.getElementById("projectShot");
+    if(p.shotImg){
+      shot.hidden=false;
+      const si=document.getElementById("shotImg");
+      si.src=p.shotImg;
+      si.alt=L.shotCap||"";
+      document.getElementById("shotLink").href=p.shotImg;
+      document.getElementById("shotLabel").textContent=L.shotLabel||"";
+      document.getElementById("shotCap").textContent=L.shotCap||"";
+      document.getElementById("shotUrl").textContent=L.shotUrl||"localhost · console";
+      document.getElementById("shotNotes").innerHTML=(L.shotNotes||[]).map(function(n,i){
+        return '<li><b>'+String(i+1).padStart(2,"0")+'</b>'+n+'</li>';
+      }).join("");
     }else{
-      heroMedia.className="hero-media "+p.art;
-      heroMedia.style.backgroundImage="";
+      shot.hidden=true;
     }
     const idx=REAL_IDS.indexOf(id);
     const nextId=REAL_IDS[(idx+1)%REAL_IDS.length];
@@ -947,11 +1027,9 @@
     document.getElementById("nextTitle").textContent=PROJECTS[nextId].short[LANG];
     document.getElementById("nextProject").onclick=()=>openProject(nextId);
     if(doScroll)project.scrollTop=0;
-    requestAnimationFrame(()=>{
-      project.querySelectorAll(".process-item,.evidence-piece").forEach((el,i)=>{
-        el.style.transitionDelay=(i*70)+"ms";
-        requestAnimationFrame(()=>el.classList.add("in"));
-      });
+    project.querySelectorAll(".process-item,.evidence-piece").forEach(function(el,i){
+      el.style.animationDelay=(i*60)+"ms";
+      el.classList.add("in");
     });
   }
   function openProject(id){
@@ -966,6 +1044,7 @@
     project.classList.remove("open");
     project.setAttribute("aria-hidden","true");
     document.body.classList.remove("project-open");
+    try{history.replaceState(null,"",location.pathname+location.search);}catch(_){}
   }
   document.getElementById("closeProject").addEventListener("click",closeProject);
   document.getElementById("viewAll").addEventListener("click",()=>openProject(REAL_IDS[0]));
