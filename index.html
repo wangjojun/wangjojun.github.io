@@ -116,6 +116,10 @@
       repeating-linear-gradient(0deg,rgba(120,170,255,.13) 0 1px,transparent 1px 40px),
       repeating-linear-gradient(90deg,rgba(120,170,255,.13) 0 1px,transparent 1px 40px),
       linear-gradient(160deg,#0c1a2c,#152c46)}
+    .art-msc .shot{position:absolute;z-index:1;left:-2%;top:7%;width:104%;display:block;border-radius:6px;overflow:hidden;background:#0e1a28;border:1px solid rgba(140,190,255,.34);box-shadow:0 26px 50px rgba(0,0,0,.72),0 0 0 1px rgba(0,0,0,.35);transform:rotate(-2.4deg)}
+    .art-msc .shot i{display:block;height:13px;background:#17283b;border-bottom:1px solid rgba(140,190,255,.16);position:relative}
+    .art-msc .shot i:after{content:"";position:absolute;left:7px;top:4.5px;width:4px;height:4px;border-radius:50%;background:#ef4b23;box-shadow:8px 0 0 rgba(255,190,110,.55),16px 0 0 rgba(140,190,255,.42)}
+    .art-msc .shot img{display:block;width:100%;height:auto}
     .art-next{background:radial-gradient(rgba(17,17,15,.22) 1px,transparent 1.6px) 0 0/14px 14px,#dedbd2}
     .art-next em{color:rgba(17,17,15,.4);text-shadow:none}
     .art-next:after{background:linear-gradient(180deg,transparent 60%,rgba(255,255,255,.35))}
@@ -165,6 +169,7 @@
     .project-nav button i:nth-child(2){transform:rotate(-45deg)}
     .project-hero{height:100vh;height:100svh;min-height:620px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0b0d0e}
     .hero-media{position:absolute;inset:0;opacity:.55;animation:heroZoom 1.6s var(--ease)}
+    .hero-media.hero-shot{opacity:.42;background-color:#0b0d0e;background-position:center 16%;background-size:cover;background-repeat:no-repeat;animation:none}
     @keyframes heroZoom{from{transform:scale(1.12)}to{transform:none}}
     .hero-shade{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 0,rgba(8,10,11,.15) 42%,rgba(8,10,11,.86) 100%),linear-gradient(180deg,rgba(0,0,0,.55),transparent 30%,rgba(0,0,0,.5))}
     .project-hero>p{position:absolute;z-index:2;top:17%;font-size:8px;letter-spacing:.2em}
@@ -240,6 +245,7 @@
       .art em .cap{font-size:6.5px;letter-spacing:.2em;margin-bottom:7px}
       .art em b{font-size:8.6vw}
       .art em.cjk b{font-size:8vw}
+      .art-msc .shot{top:4%}
       .stage-foot{left:18px;right:18px}
       .hint{max-width:66%;line-height:1.7}
       .statement{padding:12vh 20px}
@@ -322,7 +328,7 @@
         <a class="card" href="#msc" data-id="msc" aria-label="打开迷你软件公司项目详情">
           <span class="card-in">
             <span class="card-meta"><b>02 / MULTI-AGENT</b><b>60% → 100%</b></span>
-            <span class="art art-msc"><em><span class="cap">CREWAI PIPELINE</span><b>5 AGENTS<br>1 PIPELINE</b></em></span>
+            <span class="art art-msc"><span class="shot"><i></i><img src="assets/msc-console.jpg" alt="迷你软件公司控制台：运行状态与实时日志，第 3 轮通过率 100%" decoding="async"></span><em><span class="cap">CREWAI PIPELINE</span><b>5 AGENTS<br>1 PIPELINE</b></em></span>
             <span class="card-copy"><b data-i18n="card2t">迷你软件公司 · CrewAI 多智能体</b><small data-i18n="card2s">AI 工程 · 五角色质量门禁</small><strong data-i18n="card2x">需求到 zipapp，三轮自动收敛</strong></span>
           </span>
         </a>
@@ -546,6 +552,7 @@
     },
     msc: {
       art:"art-msc",
+      heroImg:"assets/msc-console-full.jpg",
       short:{zh:"迷你软件公司",ja:"ミニソフトウェア会社",en:"Mini Software Co."},
       nums:["100<em>%</em>","5","3","0"],
       actions:[{label:"GitHub / wangjojun ↗",href:"https://github.com/wangjojun",primary:true}],
@@ -927,7 +934,13 @@
       `<figure class="evidence-piece${i===0?" wide":""}"><div class="num">${n}</div><figcaption>${L.evidence[i]}</figcaption></figure>`).join("");
     document.getElementById("projectActions").innerHTML=p.actions.map(a=>
       `<a class="${a.primary?"primary":""}" href="${a.href}" target="_blank" rel="noopener">${a.label}</a>`).join("");
-    heroMedia.className="hero-media "+p.art;
+    if(p.heroImg){
+      heroMedia.className="hero-media hero-shot";
+      heroMedia.style.backgroundImage='url("'+p.heroImg+'")';
+    }else{
+      heroMedia.className="hero-media "+p.art;
+      heroMedia.style.backgroundImage="";
+    }
     const idx=REAL_IDS.indexOf(id);
     const nextId=REAL_IDS[(idx+1)%REAL_IDS.length];
     document.getElementById("nextNumber").textContent=PROJECTS[nextId].l[LANG].kicker.slice(0,2);
